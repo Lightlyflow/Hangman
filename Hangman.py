@@ -24,7 +24,6 @@ class Hangman:
         self.createButtonFrame()
         self.createWordFrame()
 
-        print("Cell size: " + str(self.root.size()))
         self.root.columnconfigure(0, minsize=400)
         self.root.columnconfigure(1, minsize=600)
         self.root.rowconfigure(0, minsize=200)
@@ -43,9 +42,12 @@ class Hangman:
         self.button_frame = tk.Frame(master=self.root, bg="green")
         self.button_frame.grid(row=1, column=1, sticky="NSEW")
 
+        self.button_frame.rowconfigure([0, 1, 2, 3, 4], minsize=100)
+        self.button_frame.columnconfigure([0, 1, 2, 3, 4], minsize=120)
+
         # Adding alphabet
         for index in range(26):
-            button = tk.Button(master=self.button_frame, text=ascii_uppercase[index])
+            button = tk.Button(master=self.button_frame, text=ascii_uppercase[index], font=("Times New Roman", 30))
             button.grid(row=index // 6, column=index % 6, sticky="NSEW")
         return
 
