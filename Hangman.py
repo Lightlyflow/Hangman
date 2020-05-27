@@ -1,4 +1,5 @@
 import tkinter as tk
+from string import ascii_uppercase
 
 
 class Hangman:
@@ -44,8 +45,12 @@ class Hangman:
         self.button_frame["bg"] = "green"
         self.button_frame.grid(row=1, column=1, sticky="NSEW")
 
-        self.bf_label = tk.Label(master=self.button_frame, text="Button Frame")
-        self.bf_label.pack()
+        """
+        TODO
+        """
+        # for letter in ascii_uppercase[:10]:
+        #     button = tk.Button(master=self.button_frame, text=letter)
+        #     button.pack(side=tk.LEFT)
         return
 
     def createWordFrame(self):
@@ -53,8 +58,9 @@ class Hangman:
         self.word_frame["bg"] = "yellow"
         self.word_frame.grid(row=0, column=1, sticky="NSEW")
 
-        self.wf_label = tk.Label(master=self.word_frame, text="Word Frame")
-        self.wf_label.pack()
+        self.wf_label = tk.Label(master=self.word_frame, text="[Word goes here!]")
+        self.wf_label.config(font=("Times new roman", 50))
+        self.wf_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
         return
 
 
