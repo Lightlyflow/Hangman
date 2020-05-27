@@ -32,8 +32,7 @@ class Hangman:
         return
 
     def createPictureFrame(self):
-        self.picture_frame = tk.Frame(master=self.root)
-        self.picture_frame["bg"] = "blue"
+        self.picture_frame = tk.Frame(master=self.root, bg="blue")
         self.picture_frame.grid(row=0, column=0, rowspan=2, sticky="NSEW")
 
         self.pf_label = tk.Label(master=self.picture_frame, text="Picture (Canvas) Frame")
@@ -41,21 +40,17 @@ class Hangman:
         return
 
     def createButtonFrame(self):
-        self.button_frame = tk.Frame(master=self.root)
-        self.button_frame["bg"] = "green"
+        self.button_frame = tk.Frame(master=self.root, bg="green")
         self.button_frame.grid(row=1, column=1, sticky="NSEW")
 
-        """
-        TODO
-        """
-        # for letter in ascii_uppercase[:10]:
-        #     button = tk.Button(master=self.button_frame, text=letter)
-        #     button.pack(side=tk.LEFT)
+        # Adding alphabet
+        for index in range(26):
+            button = tk.Button(master=self.button_frame, text=ascii_uppercase[index])
+            button.grid(row=index // 6, column=index % 6, sticky="NSEW")
         return
 
     def createWordFrame(self):
-        self.word_frame = tk.Frame(master=self.root)
-        self.word_frame["bg"] = "yellow"
+        self.word_frame = tk.Frame(master=self.root, bg="yellow")
         self.word_frame.grid(row=0, column=1, sticky="NSEW")
 
         self.wf_label = tk.Label(master=self.word_frame, text="[Word goes here!]")
