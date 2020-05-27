@@ -1,2 +1,2 @@
-# Hangman
+# Hangman (WIP)
 A python TKinter project 
