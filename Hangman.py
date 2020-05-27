@@ -19,30 +19,42 @@ class Hangman:
         self.root.mainloop()
 
     def initBoard(self):
-        self.root.columnconfigure([1, 2], weight=1)
-        self.root.rowconfigure([1, 2], weight=1)
-
         self.createPictureFrame()
         self.createButtonFrame()
         self.createWordFrame()
+
+        print("Cell size: " + str(self.root.size()))
+        self.root.columnconfigure(0, minsize=400)
+        self.root.columnconfigure(1, minsize=600)
+        self.root.rowconfigure(0, minsize=200)
+        self.root.rowconfigure(1, minsize=500)
         return
 
     def createPictureFrame(self):
-        self.picture_frame = tk.Frame(master=self.root, width=400, height=700)
+        self.picture_frame = tk.Frame(master=self.root)
         self.picture_frame["bg"] = "blue"
         self.picture_frame.grid(row=0, column=0, rowspan=2, sticky="NSEW")
+
+        self.pf_label = tk.Label(master=self.picture_frame, text="Picture (Canvas) Frame")
+        self.pf_label.pack()
         return
 
     def createButtonFrame(self):
-        self.button_frame = tk.Frame(master=self.root, width=600, height=500)
+        self.button_frame = tk.Frame(master=self.root)
         self.button_frame["bg"] = "green"
         self.button_frame.grid(row=1, column=1, sticky="NSEW")
+
+        self.bf_label = tk.Label(master=self.button_frame, text="Button Frame")
+        self.bf_label.pack()
         return
 
     def createWordFrame(self):
-        self.word_frame = tk.Frame(master=self.root, width=600, height=200)
+        self.word_frame = tk.Frame(master=self.root)
         self.word_frame["bg"] = "yellow"
         self.word_frame.grid(row=0, column=1, sticky="NSEW")
+
+        self.wf_label = tk.Label(master=self.word_frame, text="Word Frame")
+        self.wf_label.pack()
         return
 
 
