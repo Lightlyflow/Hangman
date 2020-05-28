@@ -39,24 +39,23 @@ class Hangman:
         return
 
     def createButtonFrame(self):
-        self.button_frame = tk.Frame(master=self.root, bg="green")
+        self.button_frame = tk.Frame(master=self.root, bg="green", padx=2, pady=2)
         self.button_frame.grid(row=1, column=1, sticky="NSEW")
 
-        self.button_frame.rowconfigure([0, 1, 2, 3, 4], minsize=100)
-        self.button_frame.columnconfigure([0, 1, 2, 3, 4], minsize=120)
+        self.button_frame.rowconfigure([0, 1, 2, 3, 4], weight=1)
+        self.button_frame.columnconfigure([0, 1, 2, 3, 4, 5], weight=1)
 
         # Adding alphabet
         for index in range(26):
             button = tk.Button(master=self.button_frame, text=ascii_uppercase[index], font=("Times New Roman", 30))
-            button.grid(row=index // 6, column=index % 6, sticky="NSEW")
+            button.grid(row=index // 6, column=index % 6, sticky="NSEW", padx=2, pady=2)
         return
 
     def createWordFrame(self):
         self.word_frame = tk.Frame(master=self.root, bg="yellow")
         self.word_frame.grid(row=0, column=1, sticky="NSEW")
 
-        self.wf_label = tk.Label(master=self.word_frame, text="[Word goes here!]")
-        self.wf_label.config(font=("Times new roman", 50))
+        self.wf_label = tk.Label(master=self.word_frame, text="________", font=("terminal", 50))
         self.wf_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
         return
 
