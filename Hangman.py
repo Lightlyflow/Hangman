@@ -1,6 +1,12 @@
+import random
 import tkinter as tk
+from functools import partial
 from string import ascii_uppercase
 
+
+wordDictionary = {"Pineapple": "Food",
+                  "Mango": "Food",
+                  "Banana": "Food"}
 
 def callback(event):
     canvas = event.widget
@@ -16,8 +22,11 @@ class Hangman:
         self.picture_frame = None
         self.button_frame = None
         self.word_frame = None
-        self.word = "Pineapple"
+        self.word = random.choice(list(wordDictionary))
+        self.hint = wordDictionary.get(self.word)
+        self.word = self.word.upper()
         self.chances = 5
+        print("Word", self.word, "Hint", self.hint)
 
         # Modifying stuff
         self.root.title("Hangman")
@@ -64,6 +73,8 @@ class Hangman:
         # Adding alphabet
         for index in range(26):
             button = tk.Button(master=self.button_frame, text=ascii_uppercase[index], font=("Times New Roman", 30))
+            buttonPressAction = partial(self.buttonPress, button)
+            button.config(command=buttonPressAction)
             button.grid(row=index // 6, column=index % 6, sticky="NSEW", padx=2, pady=2)
 
         return
@@ -72,7 +83,12 @@ class Hangman:
         self.word_frame = tk.Frame(master=self.root, bg="yellow")
         self.word_frame.grid(row=0, column=1, sticky="NSEW")
 
-        self.wf_label = tk.Label(master=self.word_frame, text="________", font=("terminal", 50))
+        # Creating string to put in wf_label
+        string = ""
+        for i in range(len(self.word)):
+            string += "_"
+
+        self.wf_label = tk.Label(master=self.word_frame, text=string, font=("terminal", 50))
         self.wf_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
         return
 
@@ -99,6 +115,19 @@ class Hangman:
             self.pg_canvas.create_arc(204, 208, 266, 228, width=4, extent=180, tags="Mouth")
 
         self.chances -= 1
+        return
+
+    def buttonPress(self, button):
+        letter = button["text"]
+        button["state"] = tk.DISABLED
+        included = False
+        for index in range(len(self.word)):
+            if self.word[index] == letter:
+                iword = self.wf_label["text"]
+                self.wf_label["text"] = iword[:index] + letter + iword[index+1:]
+                included = True
+        if not included:
+            self.revealNextBodyPart()
         return
 
 
