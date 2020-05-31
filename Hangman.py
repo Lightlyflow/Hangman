@@ -3,16 +3,11 @@ import tkinter as tk
 from functools import partial
 from string import ascii_uppercase
 
-
 wordDictionary = {"Pineapple": "Food",
                   "Mango": "Food",
-                  "Banana": "Food"}
-
-def callback(event):
-    canvas = event.widget
-    x = canvas.canvasx(event.x)
-    y = canvas.canvasy(event.y)
-    print(x, y)
+                  "Banana": "Food",
+                  "iPad": "Tech",
+                  "Lamp": "Furniture"}
 
 
 class Hangman:
@@ -54,7 +49,6 @@ class Hangman:
 
         self.pg_canvas = tk.Canvas(master=self.picture_frame)
         self.pg_canvas.pack(fill=tk.BOTH, expand=1)
-        self.pg_canvas.bind("<Button-1>", callback)
 
         # At beginning, creates the stage
         self.pg_canvas.create_line(65, 79, 243, 79, width=4, joinstyle=tk.BEVEL, capstyle=tk.ROUND, tags="0")
@@ -77,6 +71,8 @@ class Hangman:
             button.config(command=buttonPressAction)
             button.grid(row=index // 6, column=index % 6, sticky="NSEW", padx=2, pady=2)
 
+        experimentalButton = tk.Button(master=self.button_frame, text="Exp", command=self.removeAll)
+        experimentalButton.grid(row=4, column=2, sticky="NSEW", padx=2, pady=2)
         return
 
     def createWordFrame(self):
@@ -88,14 +84,20 @@ class Hangman:
         for i in range(len(self.word)):
             string += "_"
 
+        # Answer box
         self.wf_label = tk.Label(master=self.word_frame, text=string, font=("terminal", 50))
-        self.wf_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
+        self.wf_label.place(relx=0.5, rely=0.4, anchor=tk.CENTER)
+
+        # Hint box
+        wf_hintLabel = tk.Label(master=self.word_frame, text="Hint: " + str(self.hint), font=("terminal", 20))
+        wf_hintLabel.place(relx=0.5, rely=0.7, anchor=tk.CENTER)
         return
 
-    # Bindings and commands
+    # Bindings and commands and other functions
     def revealNextBodyPart(self):
         if self.chances < 0:
-            return
+            print("Been here")
+            self.showEndScreen(win=False)
         elif self.chances == 5:
             self.pg_canvas.create_oval(167, 119, 308, 250, width=4, tags="Head")
         elif self.chances == 4:
@@ -124,11 +126,27 @@ class Hangman:
         for index in range(len(self.word)):
             if self.word[index] == letter:
                 iword = self.wf_label["text"]
-                self.wf_label["text"] = iword[:index] + letter + iword[index+1:]
+                self.wf_label["text"] = iword[:index] + letter + iword[index + 1:]
                 included = True
         if not included:
             self.revealNextBodyPart()
+        elif self.wf_label["text"].find("_") == -1:
+            self.showEndScreen(win=True)
         return
+
+    def showEndScreen(self, win):
+        # Do this. Create an end screen.
+        if win:
+            print("Win!")
+        else:
+            print("Loss!")
+        # You can choose to remove this.
+        self.root.after(0, self.removeAll)
+        return
+
+    def removeAll(self):
+        for obj in self.root.grid_slaves():
+            obj.destroy()
 
 
 if __name__ == "__main__":
