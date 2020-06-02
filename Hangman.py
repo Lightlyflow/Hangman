@@ -141,7 +141,7 @@ class Hangman:
         else:
             print("Loss!")
         # You can choose to remove this.
-        self.root.after(0, self.removeAll)
+        self.root.after(1000, self.removeAll)
         return
 
     def removeAll(self):
