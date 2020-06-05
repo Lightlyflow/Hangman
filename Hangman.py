@@ -3,12 +3,23 @@ import tkinter as tk
 from functools import partial
 from string import ascii_uppercase
 
-wordDictionary = {"Pineapple": "Food",
-                  "Mango": "Food",
-                  "Banana": "Food",
-                  "iPad": "Tech",
-                  "Lamp": "Furniture"}
+# ([Word] , [Hint])
+wordDictionary = {}
 
+# Adds the words from file words.txt to var dictionary
+def createDic(dictionary):
+    words = open("words.txt", "r")
+    for line in words:
+        temp = line.split(", ")
+        dictionary[temp[0]] = temp[1].rstrip()
+    words.close()
+    return
+
+# Prints the content of the var dictionary out
+def printDic(dictionary):
+    for word in list(dictionary):
+        print(str(word) + " " + str(dictionary[word]))
+    return
 
 class Hangman:
     def __init__(self):
@@ -17,6 +28,8 @@ class Hangman:
         self.picture_frame = None
         self.button_frame = None
         self.word_frame = None
+        createDic(wordDictionary)
+        printDic(wordDictionary)
         self.word = random.choice(list(wordDictionary))
         self.hint = wordDictionary.get(self.word)
         self.word = self.word.upper()
@@ -71,8 +84,8 @@ class Hangman:
             button.config(command=buttonPressAction)
             button.grid(row=index // 6, column=index % 6, sticky="NSEW", padx=2, pady=2)
 
-        experimentalButton = tk.Button(master=self.button_frame, text="Exp", command=self.removeAll)
-        experimentalButton.grid(row=4, column=2, sticky="NSEW", padx=2, pady=2)
+        # experimentalButton = tk.Button(master=self.button_frame, text="Exp", command=self.removeAll)
+        # experimentalButton.grid(row=4, column=2, sticky="NSEW", padx=2, pady=2)
         return
 
     def createWordFrame(self):
