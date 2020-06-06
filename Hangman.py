@@ -21,6 +21,16 @@ def printDic(dictionary):
         print(str(word) + " " + str(dictionary[word]))
     return
 
+def addToDic(dictionary):
+    dictSet = set(list(dictionary))
+    key = input("Word: ")
+    hint = input("Hint: ")
+    if key not in dictSet:
+        file = open("words.txt", "a")
+        file.write(str(key) + ", " + str(hint))
+        file.close()
+    return
+
 class Hangman:
     def __init__(self):
         # Variables
@@ -84,8 +94,8 @@ class Hangman:
             button.config(command=buttonPressAction)
             button.grid(row=index // 6, column=index % 6, sticky="NSEW", padx=2, pady=2)
 
-        # experimentalButton = tk.Button(master=self.button_frame, text="Exp", command=self.removeAll)
-        # experimentalButton.grid(row=4, column=2, sticky="NSEW", padx=2, pady=2)
+        experimentalButton = tk.Button(master=self.button_frame, text="Exp", command=lambda: addToDic(wordDictionary))
+        experimentalButton.grid(row=4, column=2, sticky="NSEW", padx=2, pady=2)
         return
 
     def createWordFrame(self):
@@ -109,7 +119,6 @@ class Hangman:
     # Bindings and commands and other functions
     def revealNextBodyPart(self):
         if self.chances < 0:
-            print("Been here")
             self.showEndScreen(win=False)
         elif self.chances == 5:
             self.pg_canvas.create_oval(167, 119, 308, 250, width=4, tags="Head")

@@ -3,3 +3,4 @@ Mango, Food
 Banana, Food
 iPad, Tech
 Lamp, Furniture
+Camel, Animal
