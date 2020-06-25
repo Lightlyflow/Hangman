@@ -158,12 +158,19 @@ class Hangman:
 
     def showEndScreen(self, win):
         # Do this. Create an end screen.
+        self.removeAll()
+        print(self.root.grid_slaves())
         if win:
             print("Win!")
         else:
             print("Loss!")
         # You can choose to remove this.
-        self.root.after(1000, self.removeAll)
+        frame = tk.Frame(master = self.root, bg = 'red')
+        frame.pack(fill = tk.BOTH)
+        label = tk.Label(master = frame, text = "Do you want to play again?")
+        label.pack()
+        button = tk.Button(text = "Yes", width = 20, height = 10)
+        button = tk.Button(text = "No", width = 20, height = 10)
         return
 
     def removeAll(self):
