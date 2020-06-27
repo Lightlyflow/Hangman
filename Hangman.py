@@ -166,12 +166,19 @@ class Hangman:
             print("Win!")
         else:
             print("Loss!")
-        frame = tk.Frame(master=self.root, bg='red')
+        frame = tk.Frame(master=self.root, bg='pink')
         frame.pack(fill=tk.BOTH, expand=1)
         label = tk.Label(master=frame, text="Do you want to play again?")
-        label.pack()
-        button = tk.Button(text="Yes", width=20, height=10)
-        button = tk.Button(text="No", width=20, height=10)
+
+        bYes = tk.Button(master=frame, text="Yes", width=20, height=10)
+        bNo = tk.Button(master=frame, text="No", width=20, height=10)
+
+        bYes.grid(row=2, column=2, sticky="NSEW")
+        bNo.grid(row=2, column=3, sticky="NSEW")
+        label.grid(row=1, column=2, columnspan=2, sticky="NSEW")
+
+        self.root.columnconfigure(index=[0, 1, 2, 3, 4, 5], weight=1, minsize=200)
+        self.root.rowconfigure(index=[0, 1, 2, 3, 4, 5], weight=1, minsize=200)
         return
 
     def removeAll(self):
