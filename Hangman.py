@@ -9,11 +9,10 @@ wordDictionary = {}
 
 # Adds the words from file words.txt to var dictionary
 def createDic(dictionary):
-    words = open("words.txt", "r")
-    for line in words:
-        temp = line.split(", ")
-        dictionary[temp[0]] = temp[1].rstrip()
-    words.close()
+    with open("words.txt", "r") as words:
+        for line in words:
+            temp = line.split(", ")
+            dictionary[temp[0]] = temp[1].rstrip()
     return
 
 
@@ -43,7 +42,7 @@ class Hangman:
         self.button_frame = None
         self.word_frame = None
         createDic(wordDictionary)
-        printDic(wordDictionary)
+        # printDic(wordDictionary)
         self.word = random.choice(list(wordDictionary))
         self.hint = wordDictionary.get(self.word)
         self.word = self.word.upper()
@@ -98,7 +97,7 @@ class Hangman:
             button.config(command=buttonPressAction)
             button.grid(row=index // 6, column=index % 6, sticky="NSEW", padx=2, pady=2)
 
-        experimentalButton = tk.Button(master=self.button_frame, text="Exp", command=lambda: addToDic(wordDictionary))
+        experimentalButton = tk.Button(master=self.button_frame, text="Exp", command=lambda: self.showEndScreen(win=True))
         experimentalButton.grid(row=4, column=2, sticky="NSEW", padx=2, pady=2)
         return
 
@@ -162,23 +161,21 @@ class Hangman:
 
     def showEndScreen(self, win):
         self.removeAll()
-        if win:
-            print("Win!")
-        else:
-            print("Loss!")
+
         frame = tk.Frame(master=self.root, bg='pink')
-        frame.pack(fill=tk.BOTH, expand=1)
         label = tk.Label(master=frame, text="Do you want to play again?")
 
-        bYes = tk.Button(master=frame, text="Yes", width=20, height=10)
-        bNo = tk.Button(master=frame, text="No", width=20, height=10)
+        bYes = tk.Button(master=frame, text="Yes")
+        bNo = tk.Button(master=frame, text="No")
 
-        bYes.grid(row=2, column=2, sticky="NSEW")
-        bNo.grid(row=2, column=3, sticky="NSEW")
-        label.grid(row=1, column=2, columnspan=2, sticky="NSEW")
+        frame.pack(fill=tk.BOTH)
 
-        self.root.columnconfigure(index=[0, 1, 2, 3, 4, 5], weight=1, minsize=200)
-        self.root.rowconfigure(index=[0, 1, 2, 3, 4, 5], weight=1, minsize=200)
+        label.grid(row=1, column=1, columnspan=3, sticky="NSEW")
+        bYes.grid(row=3, column=1, sticky="NSEW")
+        bNo.grid(row=3, column=3, sticky="NSEW")
+
+        frame.columnconfigure(index=[0, 1, 2, 3, 4, 5], weight=1, minsize=200)
+        frame.rowconfigure(index=[0, 1, 2, 3, 4], weight=1, minsize=140)
         return
 
     def removeAll(self):
