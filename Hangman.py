@@ -171,6 +171,12 @@ class Hangman:
 
     def playAgainNo(self):
         print("No")
+        self.removeAll()
+        frame = tk.Frame(master=self.root, bg="violet")
+        labelTY=tk.Label(master=frame, text="Thank You For Playing")
+        frame.pack(fill=tk.BOTH, expand=1)
+        labelTY.pack()
+        self.root.after(3000, lambda: self.root.destroy())
         return
 
     def showEndScreen(self, win):
