@@ -43,11 +43,9 @@ class Hangman:
         self.word_frame = None
         createDic(wordDictionary)
         # printDic(wordDictionary)
-        self.word = random.choice(list(wordDictionary))
-        self.hint = wordDictionary.get(self.word)
-        self.word = self.word.upper()
-        self.chances = 5
-        print("Word", self.word, "Hint", self.hint)
+
+        # Prints answer
+        # print("Word", self.word, "Hint", self.hint)
 
         # Modifying stuff
         self.root.title("Hangman")
@@ -59,6 +57,12 @@ class Hangman:
         self.root.mainloop()
 
     def initBoard(self):
+        # Initializing vars
+        self.word = random.choice(list(wordDictionary))
+        self.hint = wordDictionary.get(self.word)
+        self.word = self.word.upper()
+        self.chances = 5
+
         self.createPictureFrame()
         self.createButtonFrame()
         self.createWordFrame()
@@ -160,6 +164,7 @@ class Hangman:
         return
 
     def playAgainYes(self):
+        self.removeAll()
         print("yes")
         self.initBoard()
         return
@@ -193,7 +198,7 @@ class Hangman:
         return
 
     def removeAll(self):
-        for obj in self.root.grid_slaves():
+        for obj in self.root.winfo_children():
             obj.destroy()
 
 
