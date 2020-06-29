@@ -172,8 +172,9 @@ class Hangman:
     def playAgainNo(self):
         print("No")
         self.removeAll()
-        frame = tk.Frame(master=self.root, bg="violet")
-        labelTY=tk.Label(master=frame, text="Thank You For Playing")
+        frame = tk.Frame(master=self.root, bg="#EBCA37")
+        labelTY=tk.Label(master=frame, width=200, height=200, text="Thank You For Playing!", bg="#EBCA37")
+        labelTY.config(font=("Ariel", 30))
         frame.pack(fill=tk.BOTH, expand=1)
         labelTY.pack()
         self.root.after(3000, lambda: self.root.destroy())
@@ -182,16 +183,19 @@ class Hangman:
     def showEndScreen(self, win):
         self.removeAll()
 
-        frame = tk.Frame(master=self.root, bg='pink')
-        label = tk.Label(master=frame, text="Do you want to play again?")
+        frame = tk.Frame(master=self.root, background="#EBCA37")
+        label = tk.Label(master=frame, text="Do you want to play again?", background="#83C8F1")
+        label.config(font=("Ariel", 18))
         if(win):
-            labelResult = tk.Label(master=frame, text="YOU WON!")
+            labelResult = tk.Label(master=frame, text="YOU WON!", background="#EBCA37")
         else:
-            labelResult = tk.Label(master=frame, text="YOU LOST!")
+            labelResult = tk.Label(master=frame, text="YOU LOST!", background="#EBCA37")
 
-        bYes = tk.Button(master=frame, text="Yes", command=self.playAgainYes)
-        bNo = tk.Button(master=frame, text="No", command=self.playAgainNo)
-
+        labelResult.config(font=("Ariel", 35))
+        bYes = tk.Button(master=frame, text="Yes", background="#5FDE35", command=self.playAgainYes)
+        bYes.config(font=("Ariel", 20))
+        bNo = tk.Button(master=frame, text="No", background="#F36B46", command=self.playAgainNo)
+        bNo.config(font=("Ariel", 20))
         frame.pack(fill=tk.BOTH)
 
         label.grid(row=2, column=2, columnspan=2, sticky="NSEW")
