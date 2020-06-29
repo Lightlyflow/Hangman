@@ -159,22 +159,36 @@ class Hangman:
             self.showEndScreen(win=True)
         return
 
+    def playAgainYes(self):
+        print("yes")
+        self.initBoard()
+        return
+
+    def playAgainNo(self):
+        print("No")
+        return
+
     def showEndScreen(self, win):
         self.removeAll()
 
         frame = tk.Frame(master=self.root, bg='pink')
         label = tk.Label(master=frame, text="Do you want to play again?")
+        if(win):
+            labelResult = tk.Label(master=frame, text="YOU WON!")
+        else:
+            labelResult = tk.Label(master=frame, text="YOU LOST!")
 
-        bYes = tk.Button(master=frame, text="Yes")
-        bNo = tk.Button(master=frame, text="No")
+        bYes = tk.Button(master=frame, text="Yes", command=self.playAgainYes)
+        bNo = tk.Button(master=frame, text="No", command=self.playAgainNo)
 
         frame.pack(fill=tk.BOTH)
 
-        label.grid(row=1, column=1, columnspan=3, sticky="NSEW")
-        bYes.grid(row=3, column=1, sticky="NSEW")
+        label.grid(row=2, column=2, columnspan=2, sticky="NSEW")
+        bYes.grid(row=3, column=2, sticky="NSEW")
         bNo.grid(row=3, column=3, sticky="NSEW")
+        labelResult.grid(row=0, column=2, columnspan=2, sticky="NSEW")
 
-        frame.columnconfigure(index=[0, 1, 2, 3, 4, 5], weight=1, minsize=200)
+        frame.columnconfigure(index=[0, 1, 2, 3, 4, 5], weight=1, minsize=166)
         frame.rowconfigure(index=[0, 1, 2, 3, 4], weight=1, minsize=140)
         return
 
